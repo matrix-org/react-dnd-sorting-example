@@ -27,7 +27,7 @@ var roomTileSource = {
 
         if (!monitor.didDrop()) {
             props.moveRoomTile(item.room, item.originalIndex);
-            if (item.targetList) {
+            if (item.targetList !== item.originalList) {
                 item.targetList.removeRoomTile(item.room);
             }
             return;
