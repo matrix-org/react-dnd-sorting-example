@@ -32,6 +32,13 @@ var roomTileSource = {
             }
             return;
         }
+        else {
+            if (item.targetList.props.order !== 'manual') {
+                // for now, just append
+                // XXX: is it naughty to refer to RoomList's state from here?
+                item.targetList.moveRoomTile(item.room, item.targetList.state.rooms.length);
+            }
+        }
 
         // When dropped on a compatible target, do something
         // persistNewOrder(item.room, dropResult.listId);
@@ -53,10 +60,14 @@ var roomTileTarget = {
             item.targetList = props.roomList;
         }
 
-        if (item.room.id !== props.room.id) {
+        if (item.targetList.props.order === 'manual' && item.room.id !== props.room.id) {
             var roomTile = props.findRoomTile(props.room);
             props.moveRoomTile(item.room, roomTile.index);
         }
+    },
+
+    drop: function(props, monitor, component) {
+        return monitor.getItem();
     },
 };
 
